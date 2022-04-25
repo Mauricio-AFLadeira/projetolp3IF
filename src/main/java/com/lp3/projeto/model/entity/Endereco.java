@@ -1,27 +1,26 @@
 package com.lp3.projeto.model.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class Cliente {
-
+public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String telefone;
-    private String email;
-    private String nome;
-    private String senha;
-
-
-
-
+    private String logradouro;
+    private Integer numero;
+    private String complemento;
+    private String bairro;
+    private String cidade;
+    private String uf;
+    private String cep;
 }
