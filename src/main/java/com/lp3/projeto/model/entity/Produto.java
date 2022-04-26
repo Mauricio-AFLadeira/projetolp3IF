@@ -34,6 +34,12 @@ public class Produto {
     @ManyToOne
     private Marca marca;
 
+    @OneToOne
+    private Cupom cupom;
+
+    @OneToOne
+    private formaPagamento formaPagamento;
+
     @ManyToMany
     @JoinTable(name = "produto_compra",
             joinColumns = @JoinColumn(name = "produto_id"),
