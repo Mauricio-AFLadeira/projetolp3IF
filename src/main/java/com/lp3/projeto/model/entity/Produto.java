@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -32,4 +33,10 @@ public class Produto {
 
     @ManyToOne
     private Marca marca;
+
+    @ManyToMany
+    @JoinTable(name = "produto_compra",
+            joinColumns = @JoinColumn(name = "produto_id"),
+            inverseJoinColumns = @JoinColumn(name = "compra_id"))
+    private List<Compra> compras;
 }

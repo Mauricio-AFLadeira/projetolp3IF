@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -26,4 +27,9 @@ public class Pedido {
     @ManyToOne
     private PessoaJuridica pj;
 
+    @ManyToMany
+    @JoinTable(name = "item_pedido",
+            joinColumns = @JoinColumn(name = "pedido_id"),
+            inverseJoinColumns = @JoinColumn(name = "produto_id"))
+    private List<Produto> produto;
 }
