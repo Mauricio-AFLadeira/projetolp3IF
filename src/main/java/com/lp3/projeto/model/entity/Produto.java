@@ -29,4 +29,7 @@ public class Produto {
 
     @ManyToOne
     private Categoria categoria;
+
+    @ManyToOne
+    private Marca marca;
 }
