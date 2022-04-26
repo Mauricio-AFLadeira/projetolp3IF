@@ -12,10 +12,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PessoaFisica extends Cliente{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class PessoaFisica extends Pessoa{
 
     private String cpf;
     private Date dataDeNascimento;

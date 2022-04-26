@@ -27,4 +27,6 @@ public class Produto {
     private String estoqueEstoque;
     private String desconto;
 
+    @ManyToOne
+    private Categoria categoria;
 }

@@ -11,12 +11,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PessoaJuridica extends Cliente{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class PessoaJuridica extends Pessoa{
     private String cnpj;
     private String responsavel;
     private String empresa;

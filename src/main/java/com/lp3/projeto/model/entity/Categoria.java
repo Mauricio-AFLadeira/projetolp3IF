@@ -1,27 +1,23 @@
 package com.lp3.projeto.model.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@MappedSuperclass
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class Pessoa {
 
+public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String telefone;
-    private String email;
     private String nome;
 
-    @OneToOne (cascade = CascadeType.ALL)
-    private Endereco endereco;
-
+    @ManyToOne
+    private Categoria categoria;
 }
