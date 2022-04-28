@@ -20,4 +20,10 @@ public class formaPagamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //Devemos criar uma classe para cada pagamento? (BoaCompra e Ebanxs)
+
+    private String pix;
+    private String cartao;
+    private String boleto;
+
 }
