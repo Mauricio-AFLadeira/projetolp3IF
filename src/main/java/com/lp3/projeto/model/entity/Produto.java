@@ -21,12 +21,12 @@ public class Produto {
     private String nome;
     private String descricao;
     private Integer valorUnitario;
+    //Criar uma classe imagem?
     private String imagem;
     private String estoqueMax;
     private String estoqueMin;
     private String estoqueRessuprimento;
-    private String estoqueEstoque;
-    private String desconto;
+    private String qtdeEstoque;
 
     @ManyToOne
     private Categoria categoria;

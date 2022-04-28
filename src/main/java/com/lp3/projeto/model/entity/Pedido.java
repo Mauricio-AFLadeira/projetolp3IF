@@ -22,14 +22,6 @@ public class Pedido {
     private Date dataDoPedido;
 
     @ManyToOne
-    private PessoaFisica pf;
+    private Pessoa pessoa;
 
-    @ManyToOne
-    private PessoaJuridica pj;
-
-    @ManyToMany
-    @JoinTable(name = "item_pedido",
-            joinColumns = @JoinColumn(name = "pedido_id"),
-            inverseJoinColumns = @JoinColumn(name = "produto_id"))
-    private List<Produto> produto;
 }
