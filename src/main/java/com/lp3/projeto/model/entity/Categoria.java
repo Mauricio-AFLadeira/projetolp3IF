@@ -19,5 +19,9 @@ public class Categoria {
     private String nome;
 
     @ManyToOne
-    private Categoria categoria;
+    private Categoria categoriaPai;
+
+
+
+
 }

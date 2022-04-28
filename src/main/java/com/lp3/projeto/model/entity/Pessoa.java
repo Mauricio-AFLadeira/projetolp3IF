@@ -17,6 +17,8 @@ public abstract class Pessoa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String login;
+    private String senha;
     private String telefone;
     private String email;
     private String nome;

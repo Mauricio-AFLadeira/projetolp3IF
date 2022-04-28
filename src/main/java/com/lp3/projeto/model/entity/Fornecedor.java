@@ -11,12 +11,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Fornecedor {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String nomeFornecedor;
-    private String telefone;
-    private String email;
+public class Fornecedor extends PessoaJuridica{
+    
 }
