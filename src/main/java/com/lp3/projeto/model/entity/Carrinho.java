@@ -16,9 +16,10 @@ public class Carrinho {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer valor;
+    private Integer valorTotal;
     private Integer frete;
 
     @OneToOne
     private FormaPagamento formaPagamento;
+
 }

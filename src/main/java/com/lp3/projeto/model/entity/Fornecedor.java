@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -12,5 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 
 public class Fornecedor extends PessoaJuridica{
+
+    private Date dataDeEntrega;
     
 }

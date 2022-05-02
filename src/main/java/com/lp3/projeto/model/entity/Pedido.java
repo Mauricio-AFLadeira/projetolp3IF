@@ -21,7 +21,4 @@ public class Pedido {
 
     private Date dataDoPedido;
 
-    @ManyToOne
-    private Pessoa pessoa;
-
 }
