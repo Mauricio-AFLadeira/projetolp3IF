@@ -1,31 +1,25 @@
 package com.lp3.projeto.model.entity;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class FormaPagamento {
-
+public class Pix {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //Devemos criar uma classe para cada pagamento? (BoaCompra e Ebanxs)
-
-    @OneToOne
-    private Cartao cartao;
-
-    @OneToOne
-    private Pix pix;
-
-
-    private String boleto;
+    //como tratar as varias formas de chaves pix
+    private String chave;
 
 }
