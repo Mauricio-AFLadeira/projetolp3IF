@@ -25,7 +25,8 @@ public abstract class Pessoa {
     private String email;
     private String nome;
 
-    @OneToMany
+    @JsonIgnore
+    @OneToMany (mappedBy = "pessoa")
     private List<Pedido> pedidos;
 
     @OneToOne (cascade = CascadeType.ALL)

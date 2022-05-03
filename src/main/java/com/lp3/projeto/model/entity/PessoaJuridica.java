@@ -16,4 +16,7 @@ public class PessoaJuridica extends Pessoa{
     private String responsavel;
     private String empresa;
 
+    @OneToOne (cascade = CascadeType.ALL)
+    private Pessoa pessoa;
+
 }

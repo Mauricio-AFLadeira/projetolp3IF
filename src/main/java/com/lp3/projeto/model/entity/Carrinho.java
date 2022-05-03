@@ -22,4 +22,7 @@ public class Carrinho {
     @OneToOne
     private FormaPagamento formaPagamento;
 
+    @OneToMany (cascade = CascadeType.ALL)
+    private ItemCarrinho itemCarrinho;
+
 }

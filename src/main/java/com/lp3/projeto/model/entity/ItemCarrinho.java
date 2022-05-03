@@ -20,4 +20,7 @@ public class ItemCarrinho {
 
     @ManyToOne
     private Carrinho carrinho;
+
+
+
 }

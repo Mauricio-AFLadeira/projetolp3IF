@@ -22,4 +22,7 @@ public class Compra {
 
     @ManyToOne
     private Fornecedor fornecedores;
+
+    @OneToMany (cascade = CascadeType.ALL)
+    private ItemCompra itemCompra;
 }
