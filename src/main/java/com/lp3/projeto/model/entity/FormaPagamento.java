@@ -17,15 +17,6 @@ public class FormaPagamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //Devemos criar uma classe para cada pagamento? (BoaCompra e Ebanxs)
-
-    @OneToOne
-    private Cartao cartao;
-
-    @OneToOne
-    private Pix pix;
-
-
-    private String boleto;
-
+    private String nome;
+    private String descricao;
 }
