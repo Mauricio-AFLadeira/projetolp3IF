@@ -16,7 +16,4 @@ public class PessoaFisica extends Pessoa{
 
     private String cpf;
     private Date dataDeNascimento;
-
-    @OneToOne (cascade = CascadeType.ALL)
-    private Pessoa pessoa;
 }

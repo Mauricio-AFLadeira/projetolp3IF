@@ -32,5 +32,4 @@ public class Produto {
 
     @ManyToOne
     private Marca marca;
-
 }

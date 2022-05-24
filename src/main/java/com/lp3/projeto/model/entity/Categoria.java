@@ -20,8 +20,4 @@ public class Categoria {
 
     @ManyToOne
     private Categoria categoriaPai;
-
-
-
-
 }

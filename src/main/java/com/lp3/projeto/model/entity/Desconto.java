@@ -23,5 +23,4 @@ public class Desconto {
 
     @ManyToOne
     private Categoria categoria;
-
 }

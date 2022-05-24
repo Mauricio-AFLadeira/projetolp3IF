@@ -21,7 +21,6 @@ public class Pedido {
 
     private Date dataDoPedido;
 
-    @OneToMany (cascade = CascadeType.ALL)
-    private ItemPedido itemPedido;
-
+    @ManyToOne
+    private Pessoa pessoa;
 }

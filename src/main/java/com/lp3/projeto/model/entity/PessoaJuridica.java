@@ -12,11 +12,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PessoaJuridica extends Pessoa{
+
     private String cnpj;
     private String responsavel;
     private String empresa;
-
-    @OneToOne (cascade = CascadeType.ALL)
-    private Pessoa pessoa;
-
 }

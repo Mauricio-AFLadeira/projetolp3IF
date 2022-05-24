@@ -15,5 +15,4 @@ import java.util.Date;
 public class Fornecedor extends PessoaJuridica{
 
     private Date dataDeEntrega;
-    
 }
