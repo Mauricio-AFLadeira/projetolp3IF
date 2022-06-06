@@ -1,7 +1,5 @@
 package com.lp3.projeto.model.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-@MappedSuperclass
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
