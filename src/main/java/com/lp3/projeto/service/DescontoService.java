@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class DescontoService {
@@ -21,8 +22,8 @@ public class DescontoService {
         return repository.findAll();
     }
 
-    public Desconto getDescontoById(Long id){
-        return repository.getById(id);
+    public Optional<Desconto> getDescontoById(Long id){
+        return repository.findById(id);
     }
 
     @Transactional
