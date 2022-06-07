@@ -1,6 +1,6 @@
-package com.lp3.projeto.api.dto;
+package com.lp3.projeto.model.dto;
 
-import com.lp3.projeto.model.entity.Pedido;
+import com.lp3.projeto.model.entity.Compra;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,14 +11,14 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PedidoDTO {
+public class CompraDTO {
 
     private Long id;
-    private Date dataDoPedido;
-    private Long idPessoa;
+    private Date dataDaCompra;
+    private Long idFornecedor;
 
-    public static PedidoDTO create(Pedido pedido){
+    public static CompraDTO create(Compra compra){
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(pedido, PedidoDTO.class);
+        return modelMapper.map(compra, CompraDTO.class);
     }
 }

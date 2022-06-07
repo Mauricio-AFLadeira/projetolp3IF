@@ -1,4 +1,4 @@
-package com.lp3.projeto.api.dto;
+package com.lp3.projeto.model.dto;
 
 import com.lp3.projeto.model.entity.Produto;
 import lombok.AllArgsConstructor;
