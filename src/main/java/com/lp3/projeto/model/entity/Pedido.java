@@ -19,7 +19,7 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date dataDoPedido;
+    private String dataDoPedido;
 
     @ManyToOne
     private Pessoa pessoa;

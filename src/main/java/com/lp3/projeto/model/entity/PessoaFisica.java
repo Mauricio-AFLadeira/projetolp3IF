@@ -15,5 +15,5 @@ import java.util.Date;
 public class PessoaFisica extends Pessoa{
 
     private String cpf;
-    private Date dataDeNascimento;
+    private String dataDeNascimento;
 }

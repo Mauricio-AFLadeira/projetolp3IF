@@ -18,8 +18,8 @@ public class Desconto {
     private Long id;
 
     private String descricao;
-    private Date dataInicio;
-    private Date dataVencimento;
+    private String dataInicio;
+    private String dataVencimento;
 
     @ManyToOne
     private Categoria categoria;
