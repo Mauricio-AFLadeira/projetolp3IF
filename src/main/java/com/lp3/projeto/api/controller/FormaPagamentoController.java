@@ -1,6 +1,6 @@
 package com.lp3.projeto.api.controller;
 
-import com.lp3.projeto.model.dto.FormaPagamentoDTO;
+import com.lp3.projeto.api.dto.FormaPagamentoDTO;
 import com.lp3.projeto.model.entity.FormaPagamento;
 import com.lp3.projeto.service.FormaPagamentoService;
 import lombok.RequiredArgsConstructor;
