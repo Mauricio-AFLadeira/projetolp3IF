@@ -1,8 +1,10 @@
 package com.lp3.projeto.api.dto;
 
+import com.lp3.projeto.model.entity.PessoaFisica;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
 
 @Data
 @NoArgsConstructor
@@ -24,4 +26,17 @@ public class PessoaFisicaDTO {
     private String cidade;
     private String uf;
     private String cep;
+
+    public static PessoaFisicaDTO create(PessoaFisica pessoaFisica){
+        ModelMapper modelMapper = new ModelMapper();
+        PessoaFisicaDTO dto = modelMapper.map(pessoaFisica, PessoaFisicaDTO.class);
+        dto.logradouro= pessoaFisica.getEndereco().getLogradouro();
+        dto.numero= pessoaFisica.getEndereco().getNumero();
+        dto.complemento= pessoaFisica.getEndereco().getComplemento();
+        dto.bairro= pessoaFisica.getEndereco().getBairro();
+        dto.cidade= pessoaFisica.getEndereco().getCidade();
+        dto.uf= pessoaFisica.getEndereco().getUf();
+        dto.cep= pessoaFisica.getEndereco().getCep();
+        return dto;
+    }
 }
