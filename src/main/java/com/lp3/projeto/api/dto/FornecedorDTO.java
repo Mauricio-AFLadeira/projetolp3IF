@@ -20,7 +20,7 @@ public class FornecedorDTO {
     private String cnpj;
     private String responsavel;
     private String empresa;
-    private String dataDeEntrega;
+    private String inscricaoEstadual;
     private String logradouro;
     private Integer numero;
     private String complemento;

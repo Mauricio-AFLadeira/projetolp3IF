@@ -1,5 +1,6 @@
 package com.lp3.projeto.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,5 +20,6 @@ public class Categoria {
     private String nome;
 
     @ManyToOne
+    @JsonIgnore
     private Categoria categoriaPai;
 }

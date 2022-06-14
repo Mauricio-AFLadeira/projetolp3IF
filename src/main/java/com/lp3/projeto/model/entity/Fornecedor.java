@@ -14,5 +14,5 @@ import java.util.Date;
 
 public class Fornecedor extends PessoaJuridica{
 
-    private String dataDeEntrega;
+    private String inscricaoEstadual;
 }
