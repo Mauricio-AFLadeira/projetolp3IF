@@ -13,7 +13,7 @@ public class CategoriaDTO {
 
     private Long id;
     private String nome;
-    private Long categoriaPai;
+    private Long idCategoria;
 
     public static CategoriaDTO create(Categoria categoria){
         ModelMapper modelMapper = new ModelMapper();
