@@ -1,15 +1,14 @@
 package com.lp3.projeto.api.controller;
 
 import com.lp3.projeto.api.dto.CategoriaDTO;
+import com.lp3.projeto.exception.RegraNegocioException;
 import com.lp3.projeto.model.entity.Categoria;
 import com.lp3.projeto.service.CategoriaService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,5 +34,28 @@ public class CategoriaController {
             return new ResponseEntity("Categoria não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(categoria.map(CategoriaDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(CategoriaDTO dto) {
+        try {
+            Categoria categoria = converter(dto);
+            categoria = service.salvar(categoria);
+            return new ResponseEntity(categoria, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Categoria converter(CategoriaDTO dto) {
+        Categoria categoria = new Categoria();
+        categoria.setId(dto.getId());
+        Optional <Categoria> cat = service.getCategoriaById(dto.getIdCategoriaPai());
+        categoria.setCategoriaPai(cat.get().getCategoriaPai());
+        categoria.setNome(dto.getNome());
+
+        //ModelMapper modelMapper = new ModelMapper();
+        //return modelMapper.map(dto, Categoria.class);
+        return categoria;
     }
 }

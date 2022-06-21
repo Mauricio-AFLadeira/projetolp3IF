@@ -20,6 +20,6 @@ public class Categoria {
     private String nome;
 
     @ManyToOne
-    @JsonIgnore
+    //@JsonIgnore
     private Categoria categoriaPai;
 }

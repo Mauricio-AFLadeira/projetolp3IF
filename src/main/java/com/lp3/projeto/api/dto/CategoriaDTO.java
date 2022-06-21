@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 
+import java.util.Optional;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,10 +15,17 @@ public class CategoriaDTO {
 
     private Long id;
     private String nome;
-    private Long idCategoria;
+    private Long idCategoriaPai;
 
     public static CategoriaDTO create(Categoria categoria){
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(categoria, CategoriaDTO.class);
+        //ModelMapper modelMapper = new ModelMapper();
+        //return modelMapper.map(categoria, CategoriaDTO.class);
+        CategoriaDTO dto = new CategoriaDTO();
+        dto.setId(categoria.getId());
+
+        dto.setIdCategoriaPai(categoria.getCategoriaPai().getId());
+        dto.setNome(categoria.getNome());
+
+        return  dto;
     }
 }
