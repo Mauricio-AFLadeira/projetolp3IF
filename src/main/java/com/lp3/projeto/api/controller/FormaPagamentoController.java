@@ -64,7 +64,7 @@ public class FormaPagamentoController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity excluir(@PathVariable("id") Long id) {
+    public ResponseEntity delete(@PathVariable("id") Long id) {
         Optional<FormaPagamento> formapagamento = service.getFormaDePagamentoById(id);
         if (!formapagamento.isPresent()) {
             return new ResponseEntity("Curso não encontrado", HttpStatus.NOT_FOUND);

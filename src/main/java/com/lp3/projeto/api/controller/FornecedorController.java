@@ -71,7 +71,7 @@ public class FornecedorController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity excluir(@PathVariable("id") Long id) {
+    public ResponseEntity delete(@PathVariable("id") Long id) {
         Optional<Fornecedor> fornecedor = service.getFornecdorById(id);
         if (!fornecedor.isPresent()) {
             return new ResponseEntity("Fornecedor não encontrado", HttpStatus.NOT_FOUND);
