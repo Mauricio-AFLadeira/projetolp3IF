@@ -64,7 +64,7 @@ public class DescontoController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity excluir(@PathVariable("id") Long id) {
+    public ResponseEntity delete(@PathVariable("id") Long id) {
         Optional<Desconto> desconto = service.getDescontoById(id);
         if (!desconto.isPresent()) {
             return new ResponseEntity("Desconto não encontrado", HttpStatus.NOT_FOUND);
