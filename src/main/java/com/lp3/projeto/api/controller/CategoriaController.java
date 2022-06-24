@@ -5,7 +5,6 @@ import com.lp3.projeto.exception.RegraNegocioException;
 import com.lp3.projeto.model.entity.Categoria;
 import com.lp3.projeto.service.CategoriaService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

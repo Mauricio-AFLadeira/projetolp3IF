@@ -1,10 +1,9 @@
 package com.lp3.projeto.api.controller;
 
 
-import com.lp3.projeto.api.dto.CategoriaDTO;
+
 import com.lp3.projeto.api.dto.CompraDTO;
 import com.lp3.projeto.exception.RegraNegocioException;
-import com.lp3.projeto.model.entity.Categoria;
 import com.lp3.projeto.model.entity.Compra;
 import com.lp3.projeto.service.CompraService;
 import lombok.RequiredArgsConstructor;

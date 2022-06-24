@@ -1,12 +1,8 @@
 package com.lp3.projeto.api.controller;
 
-import com.lp3.projeto.api.dto.FornecedorDTO;
-import com.lp3.projeto.api.dto.PessoaFisicaDTO;
 import com.lp3.projeto.api.dto.PessoaJuridicaDTO;
 import com.lp3.projeto.exception.RegraNegocioException;
 import com.lp3.projeto.model.entity.Endereco;
-import com.lp3.projeto.model.entity.Fornecedor;
-import com.lp3.projeto.model.entity.PessoaFisica;
 import com.lp3.projeto.model.entity.PessoaJuridica;
 import com.lp3.projeto.service.EnderecoService;
 import com.lp3.projeto.service.PessoaJuridicaService;

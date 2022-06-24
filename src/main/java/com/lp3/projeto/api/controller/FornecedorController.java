@@ -1,6 +1,5 @@
 package com.lp3.projeto.api.controller;
 
-import com.lp3.projeto.api.dto.FormaPagamentoDTO;
 import com.lp3.projeto.api.dto.FornecedorDTO;
 import com.lp3.projeto.exception.RegraNegocioException;
 import com.lp3.projeto.model.entity.Endereco;
