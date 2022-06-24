@@ -49,7 +49,7 @@ public class FormaPagamentoController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity atualizar(@PathVariable("id") Long id, FormaPagamentoDTO dto) {
+    public ResponseEntity put(@PathVariable("id") Long id, FormaPagamentoDTO dto) {
         if (!service.getFormaDePagamentoById(id).isPresent()) {
             return new ResponseEntity("Curso não encontrado", HttpStatus.NOT_FOUND);
         }

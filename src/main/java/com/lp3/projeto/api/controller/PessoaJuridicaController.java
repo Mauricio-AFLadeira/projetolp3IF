@@ -1,9 +1,13 @@
 package com.lp3.projeto.api.controller;
 
+import com.lp3.projeto.api.dto.PessoaFisicaDTO;
 import com.lp3.projeto.api.dto.PessoaJuridicaDTO;
+import com.lp3.projeto.model.entity.Endereco;
+import com.lp3.projeto.model.entity.PessoaFisica;
 import com.lp3.projeto.model.entity.PessoaJuridica;
 import com.lp3.projeto.service.PessoaJuridicaService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,5 +39,13 @@ public class PessoaJuridicaController {
             return new ResponseEntity("Pessoa Jurídica não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(pessoaJuridica.map(PessoaJuridicaDTO::create));
+    }
+
+    public PessoaJuridica converter(PessoaJuridicaDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        PessoaJuridica pessoaJuridica = modelMapper.map(dto, PessoaJuridica.class);
+        Endereco endereco = modelMapper.map(dto, Endereco.class);
+        pessoaJuridica.setEndereco(endereco);
+        return pessoaJuridica;
     }
 }
