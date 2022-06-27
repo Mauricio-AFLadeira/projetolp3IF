@@ -19,11 +19,11 @@ public class ItemCompraService {
         this.repository=repository;
     }
 
-    public List<ItemCompra> getPessoaJuridica(){
+    public List<ItemCompra> getItemCompra(){
         return repository.findAll();
     }
 
-    public Optional<ItemCompra> getPessoaJuridicaById(Long id){
+    public Optional<ItemCompra> getItemCompraById(Long id){
         return repository.findById(id);
     }
 

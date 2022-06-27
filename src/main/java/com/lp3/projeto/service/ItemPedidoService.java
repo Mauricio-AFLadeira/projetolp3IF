@@ -23,7 +23,7 @@ public class ItemPedidoService {
         return repository.findAll();
     }
 
-    public Optional<ItemPedido> getItemCompraById(Long id){
+    public Optional<ItemPedido> getItemPedidoById(Long id){
         return repository.findById(id);
     }
 
