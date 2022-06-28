@@ -1,5 +1,6 @@
 package com.lp3.projeto.service;
 
+import com.lp3.projeto.exception.RegraNegocioException;
 import com.lp3.projeto.model.entity.FormaPagamento;
 import com.lp3.projeto.model.repository.FormaPagamentoRepository;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,10 @@ public class FormaPagamentoService {
     }
 
     public void validar(FormaPagamento formaPagamento){
+
+        if (formaPagamento.getNome()==null || formaPagamento.getNome().trim().equals("")){
+            throw new RegraNegocioException("Pagamento não informado");
+        }
 
     }
 }

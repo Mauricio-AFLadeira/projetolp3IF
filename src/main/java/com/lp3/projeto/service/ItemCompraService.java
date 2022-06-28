@@ -1,8 +1,10 @@
 package com.lp3.projeto.service;
 
+import com.lp3.projeto.exception.RegraNegocioException;
 import com.lp3.projeto.model.entity.ItemCompra;
 import com.lp3.projeto.model.entity.PessoaJuridica;
 import com.lp3.projeto.model.repository.ItemCompraRepository;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +42,16 @@ public class ItemCompraService {
     }
 
     public void validar(ItemCompra itemCompra){
+
+        if (itemCompra.getCompra().getId() == null) {
+            throw new RegraNegocioException("Compra não relacionada");
+        }
+        if (itemCompra.getProduto().getId()==null){
+            throw new RegraNegocioException("Produto não relacionado");
+        }
+        if (itemCompra.getQtdeProduto()==null){
+            throw new RegraNegocioException("informe a quantidade de itens comprados do produto");
+        }
 
     }
 }

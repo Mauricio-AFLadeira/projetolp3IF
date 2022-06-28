@@ -1,5 +1,6 @@
 package com.lp3.projeto.service;
 
+import com.lp3.projeto.exception.RegraNegocioException;
 import com.lp3.projeto.model.entity.Desconto;
 import com.lp3.projeto.model.repository.DescontoRepository;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,16 @@ public class DescontoService {
     }
 
     public void validar(Desconto desconto) {
+
+        if (desconto.getCategoria()==null){
+            throw new RegraNegocioException("Informe para qual categoria o desconto será aplicado");
+        }
+        if (desconto.getDataInicio()==null){
+            throw new RegraNegocioException("Informe a data de inicio na qual o desconto será aplicado");
+        }
+        if (desconto.getDataVencimento()==null){
+            throw new RegraNegocioException("Informe a data de vencimento na qual o desconto será aplicado");
+        }
 
     }
 }

@@ -1,5 +1,6 @@
 package com.lp3.projeto.service;
 
+import com.lp3.projeto.exception.RegraNegocioException;
 import com.lp3.projeto.model.entity.Marca;
 import com.lp3.projeto.model.repository.MarcaRepository;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,9 @@ public class MarcaService {
 
     public void validar(Marca marca) {
 
+        if (marca.getNome()==null || marca.getNome().trim().equals("")){
+            throw new RegraNegocioException("Insira um nome para a marca");
+        }
     }
 
 }

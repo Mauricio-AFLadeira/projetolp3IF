@@ -1,5 +1,6 @@
 package com.lp3.projeto.service;
 
+import com.lp3.projeto.exception.RegraNegocioException;
 import com.lp3.projeto.model.entity.ItemPedido;
 import com.lp3.projeto.model.entity.PessoaJuridica;
 import com.lp3.projeto.model.repository.ItemPedidoRepository;
@@ -40,7 +41,15 @@ public class ItemPedidoService {
     }
 
     public void validar(ItemPedido itemPedido){
-
+        if (itemPedido.getPedido().getId() == null) {
+            throw new RegraNegocioException("Pedido não relacionado");
+        }
+        if (itemPedido.getProduto().getId()==null){
+            throw new RegraNegocioException("Produto não relacionado");
+        }
+        if (itemPedido.getQtdeProduto()==null){
+            throw new RegraNegocioException("informe a quantidade de itens vendidos do produto");
+        }
     }
 }
 

@@ -1,5 +1,6 @@
 package com.lp3.projeto.service;
 
+import com.lp3.projeto.exception.RegraNegocioException;
 import com.lp3.projeto.model.entity.Pedido;
 import com.lp3.projeto.model.repository.PedidoRepository;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,11 @@ public class PedidoService {
     }
 
     public void validar(Pedido pedido){
-
+        if (pedido.getPessoa().getId()==null){
+            throw new RegraNegocioException("Informe qual pessoa o pedido se relaciona");
+        }
+        if ((pedido.getDataDoPedido()==null||pedido.getDataDoPedido().trim().equals(""))){
+            throw new RegraNegocioException("Informe a data na qual o pedido foi realizado");
+        }
     }
 }

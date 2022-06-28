@@ -1,5 +1,6 @@
 package com.lp3.projeto.service;
 
+import com.lp3.projeto.exception.RegraNegocioException;
 import com.lp3.projeto.model.entity.Compra;
 import com.lp3.projeto.model.repository.CompraRepository;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,14 @@ public class CompraService {
     }
 
     public void validar(Compra compra){
+
+        if (compra.getDataDaCompra()==null){
+            throw  new RegraNegocioException("Data da compra não informada");
+        }
+
+        if (compra.getFornecedor().getId()==null){
+            throw new RegraNegocioException("Fornecedor não relacionado a compra");
+        }
 
     }
 }
