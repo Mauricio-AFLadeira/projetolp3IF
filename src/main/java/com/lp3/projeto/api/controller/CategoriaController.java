@@ -79,9 +79,15 @@ public class CategoriaController {
         Categoria categoria = new Categoria();
         categoria.setId(dto.getId());
         categoria.setNome(dto.getNome());
-        Optional <Categoria> cat = service.getCategoriaById(dto.getIdCategoriaPai());
-        categoria.setCategoriaPai(cat.get());
 
+        if (dto.getIdCategoriaPai() != null) {
+            Optional<Categoria> cat = service.getCategoriaById(dto.getIdCategoriaPai());
+            if (!cat.isPresent())
+                categoria.setCategoriaPai(null);
+            else {
+                categoria.setCategoriaPai(cat.get());
+            }
+        }
 
         //ModelMapper modelMapper = new ModelMapper();
         //return modelMapper.map(dto, Categoria.class);

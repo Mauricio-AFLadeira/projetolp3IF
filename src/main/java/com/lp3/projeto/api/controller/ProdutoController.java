@@ -3,6 +3,8 @@ package com.lp3.projeto.api.controller;
 import com.lp3.projeto.api.dto.ProdutoDTO;
 import com.lp3.projeto.exception.RegraNegocioException;
 import com.lp3.projeto.model.entity.Produto;
+import com.lp3.projeto.service.CategoriaService;
+import com.lp3.projeto.service.MarcaService;
 import com.lp3.projeto.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
 public class ProdutoController {
 
     private final ProdutoService service;
+    private final MarcaService marcaService;
+    private final CategoriaService categoriaService;
 
     @GetMapping()
     public ResponseEntity get(){
