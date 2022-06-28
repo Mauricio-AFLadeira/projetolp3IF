@@ -49,7 +49,7 @@ public class CategoriaController {
     @PutMapping("{id}")
     public ResponseEntity put(@PathVariable("id") Long id, CategoriaDTO dto) {
         if (!service.getCategoriaById(id).isPresent()) {
-            return new ResponseEntity("Aluno não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Categoria não encontrada", HttpStatus.NOT_FOUND);
         }
         try {
             Categoria categoria = converter(dto);
@@ -78,9 +78,10 @@ public class CategoriaController {
     public Categoria converter(CategoriaDTO dto) {
         Categoria categoria = new Categoria();
         categoria.setId(dto.getId());
-        Optional <Categoria> cat = service.getCategoriaById(dto.getIdCategoriaPai());
-        categoria.setCategoriaPai(cat.get().getCategoriaPai());
         categoria.setNome(dto.getNome());
+        Optional <Categoria> cat = service.getCategoriaById(dto.getIdCategoriaPai());
+        categoria.setCategoriaPai(cat.get());
+
 
         //ModelMapper modelMapper = new ModelMapper();
         //return modelMapper.map(dto, Categoria.class);
