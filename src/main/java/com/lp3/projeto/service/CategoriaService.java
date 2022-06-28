@@ -1,5 +1,6 @@
 package com.lp3.projeto.service;
 
+import com.lp3.projeto.exception.RegraNegocioException;
 import com.lp3.projeto.model.entity.Categoria;
 import com.lp3.projeto.model.repository.CategoriaRepository;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,10 @@ public class CategoriaService {
     }
 
     public void validar(Categoria categoria){
+
+        if (categoria.getNome()==null || categoria.getNome().trim().equals("")){
+            throw new RegraNegocioException("Categoria sem nome!");
+        }
 
     }
 }
