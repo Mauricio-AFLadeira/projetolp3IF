@@ -65,7 +65,7 @@ public class CategoriaController {
     public ResponseEntity delete(@PathVariable("id") Long id) {
         Optional<Categoria> categoria = service.getCategoriaById(id);
         if (!categoria.isPresent()) {
-            return new ResponseEntity("Curso não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Categoria não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             service.excluir(categoria.get());

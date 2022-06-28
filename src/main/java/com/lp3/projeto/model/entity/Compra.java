@@ -21,5 +21,5 @@ public class Compra {
     private String dataDaCompra;
 
     @ManyToOne
-    private Fornecedor fornecedores;
+    private Fornecedor fornecedor;
 }

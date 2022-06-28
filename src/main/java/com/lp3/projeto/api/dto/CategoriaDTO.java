@@ -22,9 +22,8 @@ public class CategoriaDTO {
         //return modelMapper.map(categoria, CategoriaDTO.class);
         CategoriaDTO dto = new CategoriaDTO();
         dto.setId(categoria.getId());
-
-        dto.setIdCategoriaPai(categoria.getCategoriaPai().getId());
         dto.setNome(categoria.getNome());
+        dto.setIdCategoriaPai(categoria.getCategoriaPai().getId());
 
         return  dto;
     }
