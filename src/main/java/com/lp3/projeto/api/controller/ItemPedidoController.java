@@ -31,7 +31,7 @@ public class ItemPedidoController {
     public ResponseEntity get(@PathVariable("id") Long id){
         Optional<ItemPedido> itemPedido = service.getItemPedidoById(id);
         if(!itemPedido.isPresent()){
-            return new ResponseEntity("Itens não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Item não encontrado", HttpStatus.NOT_FOUND);
         }
 
         return ResponseEntity.ok(itemPedido.map(ItemPedidoDTO::create));
@@ -51,7 +51,7 @@ public class ItemPedidoController {
     @PutMapping("{id}")
     public ResponseEntity put(@PathVariable("id") Long id, ItemPedidoDTO dto) {
         if (!service.getItemPedidoById(id).isPresent()) {
-            return new ResponseEntity("Itens não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Item não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             ItemPedido itemPedido = converter(dto);
@@ -67,7 +67,7 @@ public class ItemPedidoController {
     public ResponseEntity delete(@PathVariable("id") Long id) {
         Optional<ItemPedido> itemPedido = service.getItemPedidoById(id);
         if (!itemPedido.isPresent()) {
-            return new ResponseEntity("Itens não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Item não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             service.excluir(itemPedido.get());

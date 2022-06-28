@@ -32,7 +32,7 @@ public class ItemCompraController {
     public ResponseEntity get(@PathVariable("id") Long id){
         Optional<ItemCompra> itemCompra = service.getItemCompraById(id);
         if(!itemCompra.isPresent()){
-            return new ResponseEntity("Itens não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Item não encontrado", HttpStatus.NOT_FOUND);
         }
 
         return ResponseEntity.ok(itemCompra.map(ItemCompraDTO::create));
@@ -52,7 +52,7 @@ public class ItemCompraController {
     @PutMapping("{id}")
     public ResponseEntity put(@PathVariable("id") Long id, ItemCompraDTO dto) {
         if (!service.getItemCompraById(id).isPresent()) {
-            return new ResponseEntity("Itens não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Item não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             ItemCompra itemCompra = converter(dto);
@@ -68,7 +68,7 @@ public class ItemCompraController {
     public ResponseEntity delete(@PathVariable("id") Long id) {
         Optional<ItemCompra> itemCompra = service.getItemCompraById(id);
         if (!itemCompra.isPresent()) {
-            return new ResponseEntity("Itens não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Item não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             service.excluir(itemCompra.get());

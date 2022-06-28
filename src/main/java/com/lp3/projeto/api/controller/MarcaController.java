@@ -68,7 +68,7 @@ public class MarcaController {
     public ResponseEntity delete(@PathVariable("id") Long id) {
         Optional<Marca> marca = service.getMarcaById(id);
         if (!marca.isPresent()) {
-            return new ResponseEntity("Curso não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Marca não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             service.excluir(marca.get());

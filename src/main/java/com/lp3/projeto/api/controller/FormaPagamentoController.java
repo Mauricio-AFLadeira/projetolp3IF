@@ -51,7 +51,7 @@ public class FormaPagamentoController {
     @PutMapping("{id}")
     public ResponseEntity put(@PathVariable("id") Long id, FormaPagamentoDTO dto) {
         if (!service.getFormaDePagamentoById(id).isPresent()) {
-            return new ResponseEntity("Curso não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Forma de pagamento não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             FormaPagamento formaPagamento = converter(dto);
@@ -67,7 +67,7 @@ public class FormaPagamentoController {
     public ResponseEntity delete(@PathVariable("id") Long id) {
         Optional<FormaPagamento> formapagamento = service.getFormaDePagamentoById(id);
         if (!formapagamento.isPresent()) {
-            return new ResponseEntity("Curso não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Forma de pagamento não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             service.excluir(formapagamento.get());

@@ -55,7 +55,7 @@ public class PessoaJuridicaController {
     @PutMapping("{id}")
     public ResponseEntity put(@PathVariable("id") Long id, PessoaJuridicaDTO dto) {
         if (!service.getPessoaJuridicaById(id).isPresent()) {
-            return new ResponseEntity("Fornecedor não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Pessoa Juridica não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             PessoaJuridica pessoaJuridica = converter(dto);
@@ -73,7 +73,7 @@ public class PessoaJuridicaController {
     public ResponseEntity delete(@PathVariable("id") Long id) {
         Optional<PessoaJuridica> pessoaJuridica = service.getPessoaJuridicaById(id);
         if (!pessoaJuridica.isPresent()) {
-            return new ResponseEntity("Fornecedor não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Pessoa Juridica não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             service.excluir(pessoaJuridica.get());
