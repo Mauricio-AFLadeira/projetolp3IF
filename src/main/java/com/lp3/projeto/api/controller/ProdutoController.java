@@ -2,6 +2,8 @@ package com.lp3.projeto.api.controller;
 
 import com.lp3.projeto.api.dto.ProdutoDTO;
 import com.lp3.projeto.exception.RegraNegocioException;
+import com.lp3.projeto.model.entity.Categoria;
+import com.lp3.projeto.model.entity.Marca;
 import com.lp3.projeto.model.entity.Produto;
 import com.lp3.projeto.service.CategoriaService;
 import com.lp3.projeto.service.MarcaService;
@@ -44,6 +46,10 @@ public class ProdutoController {
     public ResponseEntity post(ProdutoDTO dto) {
         try {
             Produto produto = converter(dto);
+            Marca marca = marcaService.salvar(produto.getMarca());
+            produto.setMarca(marca);
+            Categoria categoria = categoriaService.salvar(produto.getCategoria());
+            produto.setCategoria(categoria);
             produto = service.salvar(produto);
             return new ResponseEntity(produto, HttpStatus.CREATED);
         } catch (RegraNegocioException e) {
@@ -59,6 +65,10 @@ public class ProdutoController {
         try {
             Produto produto = converter(dto);
             produto.setId(id);
+            Marca marca = marcaService.salvar(produto.getMarca());
+            produto.setMarca(marca);
+            Categoria categoria = categoriaService.salvar(produto.getCategoria());
+            produto.setCategoria(categoria);
             service.salvar(produto);
             return ResponseEntity.ok(produto);
         } catch (RegraNegocioException e) {
@@ -83,6 +93,27 @@ public class ProdutoController {
 
     public Produto converter(ProdutoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(dto, Produto.class);
+        Produto produto = modelMapper.map(dto, Produto.class);
+        if (dto.getIdMarca() != null) {
+            Optional<Marca> marca = marcaService.getMarcaById(dto.getIdMarca());
+            if (!marca.isPresent()) {
+                produto.setMarca(null);
+            } else {
+                produto.setMarca(marca.get());
+            }
+        }
+        if (dto.getIdCategoria() != null) {
+            Optional<Categoria> cat = categoriaService.getCategoriaById(dto.getIdCategoria());
+            if (!cat.isPresent())
+                produto.setCategoria(null);
+            else {
+                produto.setCategoria(cat.get());
+            }
+        }
+        //Marca marca = modelMapper.map(dto, Marca.class);
+        //produto.setMarca(marca);
+        //Categoria categoria = modelMapper.map(dto, Categoria.class);
+        //produto.setCategoria(categoria);
+        return produto;
     }
 }
