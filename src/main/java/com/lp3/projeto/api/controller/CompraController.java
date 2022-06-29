@@ -5,7 +5,10 @@ package com.lp3.projeto.api.controller;
 import com.lp3.projeto.api.dto.CompraDTO;
 import com.lp3.projeto.exception.RegraNegocioException;
 import com.lp3.projeto.model.entity.Compra;
+import com.lp3.projeto.model.entity.Fornecedor;
+import com.lp3.projeto.model.entity.Marca;
 import com.lp3.projeto.service.CompraService;
+import com.lp3.projeto.service.FornecedorService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -22,6 +25,7 @@ import java.util.stream.Collectors;
 public class CompraController {
 
         private final CompraService service;
+        private  final FornecedorService fornecedorService;
 
         @GetMapping()
         public ResponseEntity get(){
@@ -43,6 +47,8 @@ public class CompraController {
         public ResponseEntity post(CompraDTO dto) {
             try {
                 Compra compra = converter(dto);
+                Fornecedor fornecedor = fornecedorService.salvar(compra.getFornecedor());
+                compra.setFornecedor(fornecedor);
                 compra = service.salvar(compra);
                 return new ResponseEntity(compra, HttpStatus.CREATED);
             } catch (RegraNegocioException e) {
@@ -60,6 +66,8 @@ public class CompraController {
         try {
             Compra compra = converter(dto);
             compra.setId(id);
+            Fornecedor fornecedor = fornecedorService.salvar(compra.getFornecedor());
+            compra.setFornecedor(fornecedor);
             service.salvar(compra);
             return ResponseEntity.ok(compra);
         } catch (RegraNegocioException e) {
@@ -83,6 +91,15 @@ public class CompraController {
 
     public Compra converter(CompraDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(dto, Compra.class);
+        Compra compra = modelMapper.map(dto, Compra.class);
+        if (dto.getIdFornecedor() != null) {
+            Optional<Fornecedor> fornecedor = fornecedorService.getFornecdorById(dto.getIdFornecedor());
+            if (!fornecedor.isPresent()) {
+                compra.setFornecedor(null);
+            } else {
+                compra.setFornecedor(fornecedor.get());
+            }
+        }
+        return compra;
     }
 }
