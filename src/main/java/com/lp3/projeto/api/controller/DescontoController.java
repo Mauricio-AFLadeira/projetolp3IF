@@ -2,7 +2,9 @@ package com.lp3.projeto.api.controller;
 
 import com.lp3.projeto.api.dto.DescontoDTO;
 import com.lp3.projeto.exception.RegraNegocioException;
+import com.lp3.projeto.model.entity.Categoria;
 import com.lp3.projeto.model.entity.Desconto;
+import com.lp3.projeto.service.CategoriaService;
 import com.lp3.projeto.service.DescontoService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class DescontoController {
 
     private final DescontoService service;
+    private final CategoriaService categoriaService;
 
     @GetMapping()
     public ResponseEntity get(){
@@ -41,6 +44,8 @@ public class DescontoController {
     public ResponseEntity post(DescontoDTO dto) {
         try {
             Desconto desconto = converter(dto);
+            Categoria categoria = categoriaService.salvar(desconto.getCategoria());
+            desconto.setCategoria(categoria);
             desconto= service.salvar(desconto);
             return new ResponseEntity(desconto, HttpStatus.CREATED);
         } catch (RegraNegocioException e) {
@@ -56,6 +61,8 @@ public class DescontoController {
         try {
             Desconto desconto = converter(dto);
             desconto.setId(id);
+            Categoria categoria = categoriaService.salvar(desconto.getCategoria());
+            desconto.setCategoria(categoria);
             service.salvar(desconto);
             return ResponseEntity.ok(desconto);
         } catch (RegraNegocioException e) {
@@ -79,6 +86,15 @@ public class DescontoController {
 
     public Desconto converter(DescontoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(dto, Desconto.class);
+        Desconto desconto = modelMapper.map(dto, Desconto.class);
+        if (dto.getIdCategoria() != null) {
+            Optional<Categoria> categoria = categoriaService.getCategoriaById(dto.getIdCategoria());
+            if (!categoria.isPresent()) {
+                desconto.setCategoria(null);
+            } else {
+                desconto.setCategoria(categoria.get());
+            }
+        }
+        return desconto;
     }
 }
