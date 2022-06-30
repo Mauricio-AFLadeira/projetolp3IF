@@ -3,7 +3,11 @@ package com.lp3.projeto.api.controller;
 import com.lp3.projeto.api.dto.ItemPedidoDTO;
 import com.lp3.projeto.exception.RegraNegocioException;
 import com.lp3.projeto.model.entity.ItemPedido;
+import com.lp3.projeto.model.entity.Pedido;
+import com.lp3.projeto.model.entity.Produto;
 import com.lp3.projeto.service.ItemPedidoService;
+import com.lp3.projeto.service.PedidoService;
+import com.lp3.projeto.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -20,6 +24,8 @@ import java.util.stream.Collectors;
 public class ItemPedidoController {
 
     private final ItemPedidoService service;
+    private final ProdutoService produtoService;
+    private final PedidoService pedidoService;
 
     @GetMapping()
     public ResponseEntity get(){
@@ -41,6 +47,10 @@ public class ItemPedidoController {
     public ResponseEntity post(ItemPedidoDTO dto) {
         try {
             ItemPedido itemPedido = converter(dto);
+            Produto produto = produtoService.salvar(itemPedido.getProduto());
+            itemPedido.setProduto(produto);
+            Pedido pedido = pedidoService.salvar(itemPedido.getPedido());
+            itemPedido.setPedido(pedido);
             itemPedido= service.salvar(itemPedido);
             return new ResponseEntity(itemPedido, HttpStatus.CREATED);
         } catch (RegraNegocioException e) {
@@ -56,6 +66,10 @@ public class ItemPedidoController {
         try {
             ItemPedido itemPedido = converter(dto);
             itemPedido.setId(id);
+            Produto produto = produtoService.salvar(itemPedido.getProduto());
+            itemPedido.setProduto(produto);
+            Pedido pedido = pedidoService.salvar(itemPedido.getPedido());
+            itemPedido.setPedido(pedido);
             service.salvar(itemPedido);
             return ResponseEntity.ok(itemPedido);
         } catch (RegraNegocioException e) {
@@ -79,6 +93,23 @@ public class ItemPedidoController {
 
     public ItemPedido converter(ItemPedidoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(dto, ItemPedido.class);
+        ItemPedido itemPedido = modelMapper.map(dto, ItemPedido.class);
+        if (dto.getIdProduto() != null) {
+            Optional<Produto> produto = produtoService.getProdutoById(dto.getIdProduto());
+            if (!produto.isPresent()) {
+                itemPedido.setProduto(null);
+            } else {
+                itemPedido.setProduto(produto.get());
+            }
+        }
+        if (dto.getIdPedido() != null) {
+            Optional<Pedido> pedido = pedidoService.getPedidoById(dto.getIdPedido());
+            if (!pedido.isPresent()) {
+                itemPedido.setPedido(null);
+            } else {
+                itemPedido.setPedido(pedido.get());
+            }
+        }
+        return itemPedido;
     }
 }
