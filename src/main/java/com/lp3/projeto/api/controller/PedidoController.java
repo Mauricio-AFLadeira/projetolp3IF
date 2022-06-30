@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class PedidoController {
 
     private final PedidoService service;
+    //private final
 
     @GetMapping()
     public ResponseEntity get(){
