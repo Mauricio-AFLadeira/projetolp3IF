@@ -3,8 +3,13 @@ package com.lp3.projeto.api.controller;
 
 import com.lp3.projeto.api.dto.ItemCompraDTO;
 import com.lp3.projeto.exception.RegraNegocioException;
+import com.lp3.projeto.model.entity.Compra;
 import com.lp3.projeto.model.entity.ItemCompra;
+import com.lp3.projeto.model.entity.Marca;
+import com.lp3.projeto.model.entity.Produto;
+import com.lp3.projeto.service.CompraService;
 import com.lp3.projeto.service.ItemCompraService;
+import com.lp3.projeto.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -21,6 +26,8 @@ import java.util.stream.Collectors;
 public class ItemCompraController {
 
     private final ItemCompraService service;
+    private final CompraService compraService;
+    private final ProdutoService produtoService;
 
     @GetMapping()
     public ResponseEntity get(){
@@ -41,9 +48,13 @@ public class ItemCompraController {
     @PostMapping()
     public ResponseEntity post(ItemCompraDTO dto) {
         try {
-            ItemCompra itemPedido = converter(dto);
-            itemPedido= service.salvar(itemPedido);
-            return new ResponseEntity(itemPedido, HttpStatus.CREATED);
+            ItemCompra itemCompra = converter(dto);
+            Produto produto = produtoService.salvar(itemCompra.getProduto());
+            itemCompra.setProduto(produto);
+            Compra compra = compraService.salvar(itemCompra.getCompra());
+            itemCompra.setCompra(compra);
+            itemCompra= service.salvar(itemCompra);
+            return new ResponseEntity(itemCompra, HttpStatus.CREATED);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -57,6 +68,10 @@ public class ItemCompraController {
         try {
             ItemCompra itemCompra = converter(dto);
             itemCompra.setId(id);
+            Produto produto = produtoService.salvar(itemCompra.getProduto());
+            itemCompra.setProduto(produto);
+            Compra compra = compraService.salvar(itemCompra.getCompra());
+            itemCompra.setCompra(compra);
             service.salvar(itemCompra);
             return ResponseEntity.ok(itemCompra);
         } catch (RegraNegocioException e) {
@@ -80,6 +95,23 @@ public class ItemCompraController {
 
     public ItemCompra converter(ItemCompraDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(dto, ItemCompra.class);
+        ItemCompra itemCompra = modelMapper.map(dto, ItemCompra.class);
+        if (dto.getIdCompra() != null) {
+            Optional<Compra> compra = compraService.getCompraById(dto.getIdCompra());
+            if (!compra.isPresent()) {
+                itemCompra.setCompra(null);
+            } else {
+                itemCompra.setCompra(compra.get());
+            }
+        }
+        if (dto.getIdProduto() != null) {
+            Optional<Produto> produto = produtoService.getProdutoById(dto.getIdProduto());
+            if (!produto.isPresent()) {
+                itemCompra.setProduto(null);
+            } else {
+                itemCompra.setProduto(produto.get());
+            }
+        }
+        return itemCompra;
     }
 }
