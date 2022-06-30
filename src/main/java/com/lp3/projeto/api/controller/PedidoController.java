@@ -2,8 +2,11 @@ package com.lp3.projeto.api.controller;
 
 import com.lp3.projeto.api.dto.PedidoDTO;
 import com.lp3.projeto.exception.RegraNegocioException;
+import com.lp3.projeto.model.entity.Marca;
 import com.lp3.projeto.model.entity.Pedido;
+import com.lp3.projeto.model.entity.Pessoa;
 import com.lp3.projeto.service.PedidoService;
+import com.lp3.projeto.service.PessoaService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -20,7 +23,7 @@ import java.util.stream.Collectors;
 public class PedidoController {
 
     private final PedidoService service;
-    //private final
+    private final PessoaService pessoaService;
 
     @GetMapping()
     public ResponseEntity get(){
@@ -41,6 +44,8 @@ public class PedidoController {
     public ResponseEntity post(PedidoDTO dto) {
         try {
             Pedido pedido = converter(dto);
+            Pessoa pessoa = pessoaService.salvar(pedido.getPessoa());
+            pedido.setPessoa(pessoa);
             pedido = service.salvar(pedido);
             return new ResponseEntity(pedido, HttpStatus.CREATED);
         } catch (RegraNegocioException e) {
@@ -56,6 +61,8 @@ public class PedidoController {
         try {
             Pedido pedido = converter(dto);
             pedido.setId(id);
+            Pessoa pessoa = pessoaService.salvar(pedido.getPessoa());
+            pedido.setPessoa(pessoa);
             service.salvar(pedido);
             return ResponseEntity.ok(pedido);
         } catch (RegraNegocioException e) {
@@ -79,6 +86,15 @@ public class PedidoController {
 
     public Pedido converter(PedidoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(dto, Pedido.class);
+        Pedido pedido =modelMapper.map(dto, Pedido.class);
+        if (dto.getIdPessoa() != null) {
+            Optional<Pessoa> pessoa = pessoaService.getPessoaById(dto.getIdPessoa());
+            if (!pessoa.isPresent()) {
+                pedido.setPessoa(null);
+            } else {
+                pedido.setPessoa(pessoa.get());
+            }
+        }
+        return pedido;
     }
 }
