@@ -1,5 +1,8 @@
 package com.lp3.projeto.config;
 
+import com.lp3.projeto.security.JwtAuthFilter;
+import com.lp3.projeto.security.JwtService;
+
 import com.lp3.projeto.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,12 +19,79 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig extends WebSecurityConfigurerAdapter{
+
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private JwtService jwtService;
 
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public OncePerRequestFilter jwtFilter(){
+        return new JwtAuthFilter(jwtService, usuarioService);
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(usuarioService)
+                .passwordEncoder(passwordEncoder());
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/api/v1/pessoasFisicas/**")
+                .hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/v1/pessoasJuridicas/**")
+                .hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/v1/fornecedores/**")
+                .hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/v1/formaPagamentos/**")
+                .hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/v1/pedidos/**")
+                .hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/v1/produtos/**")
+                .hasAnyRole("ADMIN")
+                .antMatchers("/api/v1/descontos/**")
+                .hasRole("ADMIN")
+                .antMatchers("/api/v1/compras/**")
+                .hasRole("ADMIN")
+                .antMatchers("/api/v1/itensCompras/**")
+                .hasAnyRole("ADMIN")
+                .antMatchers("/api/v1/itensPedidos/**")
+                .hasAnyRole("ADMIN")
+                .antMatchers("/api/v1/marcas/**")
+                .hasAnyRole("ADMIN")
+                .antMatchers("/api/v1/categorias/**")
+                .hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/v1/usuarios/**")
+                .permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
+        ;
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers(
+                "/v2/api-docs",
+                "/configuration/ui",
+                "/swagger-resources/**",
+                "/configuration/security",
+                "/swagger-ui.html",
+                "/webjars/**");
     }
 }
