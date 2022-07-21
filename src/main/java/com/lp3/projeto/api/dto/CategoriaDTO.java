@@ -23,8 +23,9 @@ public class CategoriaDTO {
         CategoriaDTO dto = new CategoriaDTO();
         dto.setId(categoria.getId());
         dto.setNome(categoria.getNome());
-        dto.setIdCategoriaPai(categoria.getCategoriaPai().getId());
-
+        if(categoria.getCategoriaPai()!=null) {
+            dto.setIdCategoriaPai(categoria.getCategoriaPai().getId());
+        }
         return  dto;
     }
 }

@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers("/api/v1/pessoasJuridicas/**")
                 .hasAnyRole("USER", "ADMIN")
                 .antMatchers("/api/v1/fornecedores/**")
-                .hasAnyRole("USER", "ADMIN")
+                .hasAnyRole("ADMIN")
                 .antMatchers("/api/v1/formaPagamentos/**")
                 .hasAnyRole("USER", "ADMIN")
                 .antMatchers("/api/v1/pedidos/**")
