@@ -23,4 +23,6 @@ public class Usuario {
     private String senha;
 
     private boolean admin;
+
+    private boolean fornecedor;
 }

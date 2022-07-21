@@ -42,9 +42,16 @@ public class UsuarioService implements UserDetailsService{
         Usuario usuario = repository.findByLogin(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 
-        String[] roles = usuario.isAdmin()
-                ? new String[]{"ADMIN", "USER"}
-                : new String[]{"USER"};
+
+        String[] roles;
+        if (usuario.isAdmin()){
+            roles = new String[]{"ADMIN", "USER"};
+        } else {
+            roles = new String[]{"USER"};
+        }
+//        String[] roles = usuario.isAdmin()
+//                ? new String[]{"ADMIN", "USER"}
+//                : new String[]{"USER"};
 
         return User
                 .builder()
