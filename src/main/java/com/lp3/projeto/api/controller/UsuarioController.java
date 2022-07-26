@@ -6,6 +6,10 @@ import com.lp3.projeto.exception.SenhaInvalidaException;
 import com.lp3.projeto.model.entity.Usuario;
 import com.lp3.projeto.security.JwtService;
 import com.lp3.projeto.service.UsuarioService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/api/v1/usuarios")
 @RequiredArgsConstructor
+@Api("API de Usuários")
 public class UsuarioController {
     private final UsuarioService usuarioService;
     private final PasswordEncoder passwordEncoder;
@@ -24,6 +29,11 @@ public class UsuarioController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation("Salva um novo curso")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Usuário salvo com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar o usuário")
+    })
     public Usuario salvar(@RequestBody Usuario usuario ){
         String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
         usuario.setSenha(senhaCriptografada);
@@ -31,6 +41,11 @@ public class UsuarioController {
     }
 
     @PostMapping("/auth")
+    @ApiOperation("Salva um novo curso")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Usuário autorizado"),
+            @ApiResponse(code = 401, message = "Usuário não autorizado")
+    })
     public TokenDTO autenticar(@RequestBody UsuarioDTO credenciais){
         try{
             Usuario usuario = Usuario.builder()
