@@ -37,17 +37,17 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title("SCA API")
-                .description("API do Sistema de Controle Acadêmico")
+                .title("LP3 API")
+                .description("API do Projeto de LP3 da turma 2022.1 do IF SUDESTE MG - Campus Juiz de Fora")
                 .version("1.0")
                 .contact(contact())
                 .build();
     }
 
     private Contact contact(){
-        return new Contact("Marco Antônio Araújo"
-                , "http://github.com/marcoaparaujo",
-                "marcoaparaujo@gmail.com");
+        return new Contact("Mauricio Azevedo Franco Ladeira / Patrick Hauck dos Santos"
+                , "http://github.com/Mauricio-AFLadeira",
+                "mauricioafl001@gmail.com");
     }
 
 
