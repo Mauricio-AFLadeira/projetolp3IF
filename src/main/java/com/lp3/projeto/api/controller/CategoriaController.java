@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/categorias")
 @RequiredArgsConstructor
-@Api("API de Categorias")
+@Api("API de Categoria")
 public class CategoriaController {
 
     private final CategoriaService service;
@@ -89,7 +89,7 @@ public class CategoriaController {
             @ApiResponse(code = 204, message = "Categoria excluída"),
             @ApiResponse(code = 404, message = "Categoria não encontrada")
     })
-    public ResponseEntity delete(@PathVariable("id") Long id) {
+    public ResponseEntity delete(@PathVariable("id") @ApiParam("Id da categoria") Long id) {
         Optional<Categoria> categoria = service.getCategoriaById(id);
         if (!categoria.isPresent()) {
             return new ResponseEntity("Categoria não encontrado", HttpStatus.NOT_FOUND);

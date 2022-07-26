@@ -9,6 +9,7 @@ import com.lp3.projeto.model.entity.Fornecedor;
 import com.lp3.projeto.model.entity.Marca;
 import com.lp3.projeto.service.CompraService;
 import com.lp3.projeto.service.FornecedorService;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -22,19 +23,30 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/compras")
 @RequiredArgsConstructor
+@Api("API de Compra")
 public class CompraController {
 
         private final CompraService service;
         private  final FornecedorService fornecedorService;
 
         @GetMapping()
+        @ApiOperation("Obter todas as compras")
+        @ApiResponses({
+                @ApiResponse(code = 200, message = "Compras obtidas"),
+                @ApiResponse(code = 404, message = "Nenhuma compra existente")
+        })
         public ResponseEntity get(){
             List<Compra> compras = service.getCompra();
             return ResponseEntity.ok(compras.stream().map(CompraDTO::create).collect(Collectors.toList()));
         }
 
         @GetMapping("/{id}")
-        public ResponseEntity get(@PathVariable("id") Long id){
+        @ApiOperation("Obter detalhes de uma compra")
+        @ApiResponses({
+                @ApiResponse(code = 200, message = "Compra encontrada"),
+                @ApiResponse(code = 404, message = "Compra não encontrada")
+        })
+        public ResponseEntity get(@PathVariable("id") @ApiParam("Id da Compra") Long id){
             Optional<Compra> compra = service.getCompraById(id);
             if(!compra.isPresent()){
                 return new ResponseEntity("Compra não encontrada", HttpStatus.NOT_FOUND);
@@ -44,6 +56,11 @@ public class CompraController {
         }
 
         @PostMapping()
+        @ApiOperation("Obter detalhes de uma categoria")
+        @ApiResponses({
+                @ApiResponse(code = 201, message = "Compra salva"),
+                @ApiResponse(code = 400, message = "Erro ao salvar compra")
+        })
         public ResponseEntity post(CompraDTO dto) {
             try {
                 Compra compra = converter(dto);
@@ -59,7 +76,12 @@ public class CompraController {
 
 
     @PutMapping("{id}")
-    public ResponseEntity put(@PathVariable("id") Long id, CompraDTO dto) {
+    @ApiOperation("Obter detalhes de uma compra")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Compra alterada"),
+            @ApiResponse(code = 404, message = "Compra não encontrada")
+    })
+    public ResponseEntity put(@PathVariable("id") @ApiParam("Id da compra") Long id, CompraDTO dto) {
         if (!service.getCompraById(id).isPresent()) {
             return new ResponseEntity("Compra não encontrada", HttpStatus.NOT_FOUND);
         }
@@ -76,7 +98,12 @@ public class CompraController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity delete(@PathVariable("id") Long id) {
+    @ApiOperation("Obter detalhes de uma categoria")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Categoria excluída"),
+            @ApiResponse(code = 404, message = "Categoria não encontrada")
+    })
+    public ResponseEntity delete(@PathVariable("id") @ApiParam("Id da compra") Long id) {
         Optional<Compra> compra = service.getCompraById(id);
         if (!compra.isPresent()) {
             return new ResponseEntity("Compra não encontrada", HttpStatus.NOT_FOUND);
