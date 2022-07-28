@@ -27,10 +27,10 @@ public class DescontoController {
     private final CategoriaService categoriaService;
 
     @GetMapping()
-    @ApiOperation("Obter todas os descontos")
+    @ApiOperation("Obter todos os descontos")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Categorias obtidas"),
-            @ApiResponse(code = 404, message = "Nenhuma categoria existente")
+            @ApiResponse(code = 200, message = "Descontos obtidos"),
+            @ApiResponse(code = 404, message = "Nenhum desconto existente")
     })
     public ResponseEntity get(){
         List<Desconto> descontos = service.getDesconto();
@@ -43,7 +43,7 @@ public class DescontoController {
             @ApiResponse(code = 200, message = "Desconto encontrado"),
             @ApiResponse(code = 404, message = "Desconto não encontrado")
     })
-    public ResponseEntity get(@PathVariable("id") @ApiParam("Id da Desconto") Long id){
+    public ResponseEntity get(@PathVariable("id") @ApiParam("Id do Desconto") Long id){
         Optional<Desconto> desconto = service.getDescontoById(id);
         if(!desconto.isPresent()){
             return new ResponseEntity("Desconto não encontrado", HttpStatus.NOT_FOUND);
@@ -53,9 +53,9 @@ public class DescontoController {
     }
 
     @PostMapping()
-    @ApiOperation("Obter detalhes de um desconto")
+    @ApiOperation("Adicionar um desconto")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "Desconto salva"),
+            @ApiResponse(code = 201, message = "Desconto salvo"),
             @ApiResponse(code = 400, message = "Erro ao salvar desconto")
     })
     public ResponseEntity post(DescontoDTO dto) {
@@ -71,12 +71,12 @@ public class DescontoController {
     }
 
     @PutMapping("{id}")
-    @ApiOperation("Obter detalhes de um desconto")
+    @ApiOperation("Alterar credenciais de um desconto")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Desconto alterado"),
             @ApiResponse(code = 404, message = "Desconto não encontrado")
     })
-    public ResponseEntity put(@PathVariable("id") @ApiParam("Id da Desconto") Long id, DescontoDTO dto) {
+    public ResponseEntity put(@PathVariable("id") @ApiParam("Id do Desconto") Long id, DescontoDTO dto) {
         if (!service.getDescontoById(id).isPresent()) {
             return new ResponseEntity("Desconto não encontrado", HttpStatus.NOT_FOUND);
         }
@@ -93,7 +93,7 @@ public class DescontoController {
     }
 
     @DeleteMapping("{id}")
-    @ApiOperation("Obter detalhes de um desconto")
+    @ApiOperation("Excluir desconto")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Desconto excluído"),
             @ApiResponse(code = 404, message = "Desconto não encontrado")

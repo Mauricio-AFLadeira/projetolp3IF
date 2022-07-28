@@ -29,7 +29,7 @@ public class UsuarioController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation("Salva um novo curso")
+    @ApiOperation("Salva um novo usuário")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Usuário salvo com sucesso"),
             @ApiResponse(code = 400, message = "Erro ao salvar o usuário")
@@ -41,7 +41,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/auth")
-    @ApiOperation("Salva um novo curso")
+    @ApiOperation("Salva um novo usuário")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Usuário autorizado"),
             @ApiResponse(code = 401, message = "Usuário não autorizado")

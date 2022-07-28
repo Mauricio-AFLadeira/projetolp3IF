@@ -56,7 +56,7 @@ public class CompraController {
         }
 
         @PostMapping()
-        @ApiOperation("Obter detalhes de uma categoria")
+        @ApiOperation("Adicionar uma categoria")
         @ApiResponses({
                 @ApiResponse(code = 201, message = "Compra salva"),
                 @ApiResponse(code = 400, message = "Erro ao salvar compra")
@@ -76,7 +76,7 @@ public class CompraController {
 
 
     @PutMapping("{id}")
-    @ApiOperation("Obter detalhes de uma compra")
+    @ApiOperation("Alterar credenciais de uma compra")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Compra alterada"),
             @ApiResponse(code = 404, message = "Compra não encontrada")
@@ -98,7 +98,7 @@ public class CompraController {
     }
 
     @DeleteMapping("{id}")
-    @ApiOperation("Obter detalhes de uma categoria")
+    @ApiOperation("Deletar categoria")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Categoria excluída"),
             @ApiResponse(code = 404, message = "Categoria não encontrada")

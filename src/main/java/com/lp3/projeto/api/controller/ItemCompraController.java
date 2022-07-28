@@ -10,6 +10,7 @@ import com.lp3.projeto.model.entity.Produto;
 import com.lp3.projeto.service.CompraService;
 import com.lp3.projeto.service.ItemCompraService;
 import com.lp3.projeto.service.ProdutoService;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/itensCompras")
 @RequiredArgsConstructor
+@Api("API de Itens Compras")
 public class ItemCompraController {
 
     private final ItemCompraService service;
@@ -30,13 +32,23 @@ public class ItemCompraController {
     private final ProdutoService produtoService;
 
     @GetMapping()
+    @ApiOperation("Obter todos os itens compras")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Itens compras obtidos"),
+            @ApiResponse(code = 404, message = "Nenhum item compra existente")
+    })
     public ResponseEntity get(){
         List<ItemCompra> itensCompras = service.getItemCompra();
         return ResponseEntity.ok(itensCompras.stream().map(ItemCompraDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity get(@PathVariable("id") Long id){
+    @ApiOperation("Obter detalhes de um item compra")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Item compra encontrado"),
+            @ApiResponse(code = 404, message = "Item compra não encontrado")
+    })
+    public ResponseEntity get(@PathVariable("id") @ApiParam("Id do item compra") Long id){
         Optional<ItemCompra> itemCompra = service.getItemCompraById(id);
         if(!itemCompra.isPresent()){
             return new ResponseEntity("Item não encontrado", HttpStatus.NOT_FOUND);
@@ -46,6 +58,11 @@ public class ItemCompraController {
     }
 
     @PostMapping()
+    @ApiOperation("Adicionar um item compra")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Item compra salvo"),
+            @ApiResponse(code = 400, message = "Erro ao salvar item compra")
+    })
     public ResponseEntity post(ItemCompraDTO dto) {
         try {
             ItemCompra itemCompra = converter(dto);
@@ -61,7 +78,12 @@ public class ItemCompraController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity put(@PathVariable("id") Long id, ItemCompraDTO dto) {
+    @ApiOperation("Alterar credenciais de um item compra")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Item compra alterado"),
+            @ApiResponse(code = 404, message = "Item compra não encontrado")
+    })
+    public ResponseEntity put(@PathVariable("id") @ApiParam("Id do Item compra") Long id, ItemCompraDTO dto) {
         if (!service.getItemCompraById(id).isPresent()) {
             return new ResponseEntity("Item não encontrado", HttpStatus.NOT_FOUND);
         }
@@ -80,7 +102,12 @@ public class ItemCompraController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity delete(@PathVariable("id") Long id) {
+    @ApiOperation("Excluir item compra")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Item compra excluído"),
+            @ApiResponse(code = 404, message = "Item compra não encontrado")
+    })
+    public ResponseEntity delete(@PathVariable("id") @ApiParam("Id do Item Compra") Long id) {
         Optional<ItemCompra> itemCompra = service.getItemCompraById(id);
         if (!itemCompra.isPresent()) {
             return new ResponseEntity("Item não encontrado", HttpStatus.NOT_FOUND);

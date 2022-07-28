@@ -4,6 +4,7 @@ import com.lp3.projeto.api.dto.FormaPagamentoDTO;
 import com.lp3.projeto.exception.RegraNegocioException;
 import com.lp3.projeto.model.entity.FormaPagamento;
 import com.lp3.projeto.service.FormaPagamentoService;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -17,19 +18,29 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/formaPagamentos")
 @RequiredArgsConstructor
-
+@Api("API da Forma de Pagamento")
 public class FormaPagamentoController {
 
     private final FormaPagamentoService service;
 
     @GetMapping()
+    @ApiOperation("Obter todas as formas de pagamento")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Formas de pagamentos obtidas"),
+            @ApiResponse(code = 404, message = "Nenhuma forma de pagamento existente")
+    })
     public ResponseEntity get() {
         List<FormaPagamento> formaPagamentos = service.getFormaDePagamento();
         return ResponseEntity.ok(formaPagamentos.stream().map(FormaPagamentoDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity get(@PathVariable("id") Long id){
+    @ApiOperation("Obter detalhes de uma forma de pagamento")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Forma de pagamento encontrada"),
+            @ApiResponse(code = 404, message = "Forma de pagamento não encontrada")
+    })
+    public ResponseEntity get(@PathVariable("id") @ApiParam("Id da forma de pagamento") Long id){
         Optional<FormaPagamento> formaPagamento = service.getFormaDePagamentoById(id);
         if(!formaPagamento.isPresent()){
             return new ResponseEntity("Forma de pagamento não encontrada", HttpStatus.NOT_FOUND);
@@ -38,6 +49,11 @@ public class FormaPagamentoController {
     }
 
     @PostMapping()
+    @ApiOperation("Adicionar uma forma de pagamento")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Forma de pagamento salva"),
+            @ApiResponse(code = 400, message = "Erro ao salvar forma de pagamento")
+    })
     public ResponseEntity post(FormaPagamentoDTO dto) {
         try {
             FormaPagamento formaPagamento = converter(dto);
@@ -49,7 +65,12 @@ public class FormaPagamentoController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity put(@PathVariable("id") Long id, FormaPagamentoDTO dto) {
+    @ApiOperation("Alterar credenciais de uma forma de pagamento")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Forma de pagamento alterada"),
+            @ApiResponse(code = 404, message = "Forma de pagamento não encontrada")
+    })
+    public ResponseEntity put(@PathVariable("id") @ApiParam("Id da Forma de pagamento") Long id, FormaPagamentoDTO dto) {
         if (!service.getFormaDePagamentoById(id).isPresent()) {
             return new ResponseEntity("Forma de pagamento não encontrado", HttpStatus.NOT_FOUND);
         }
@@ -64,7 +85,12 @@ public class FormaPagamentoController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity delete(@PathVariable("id") Long id) {
+    @ApiOperation("Excluir forma de pagamento")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Forma de pagamento excluída"),
+            @ApiResponse(code = 404, message = "Forma de pagamento não encontrada")
+    })
+    public ResponseEntity delete(@PathVariable("id") @ApiParam("Id da forma de pagamento") Long id) {
         Optional<FormaPagamento> formapagamento = service.getFormaDePagamentoById(id);
         if (!formapagamento.isPresent()) {
             return new ResponseEntity("Forma de pagamento não encontrado", HttpStatus.NOT_FOUND);

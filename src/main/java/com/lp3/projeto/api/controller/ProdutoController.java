@@ -8,6 +8,7 @@ import com.lp3.projeto.model.entity.Produto;
 import com.lp3.projeto.service.CategoriaService;
 import com.lp3.projeto.service.MarcaService;
 import com.lp3.projeto.service.ProdutoService;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/produtos")
 @RequiredArgsConstructor
+@Api("Api de Produto")
 public class ProdutoController {
 
     private final ProdutoService service;
@@ -28,13 +30,23 @@ public class ProdutoController {
     private final CategoriaService categoriaService;
 
     @GetMapping()
+    @ApiOperation("Obter todos os Produtos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Produtos obtidos"),
+            @ApiResponse(code = 404, message = "Nenhum produto existente")
+    })
     public ResponseEntity get(){
         List<Produto> produtos = service.getProdutos();
         return ResponseEntity.ok(produtos.stream().map(ProdutoDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity get(@PathVariable("id") Long id){
+    @ApiOperation("Obter detalhes de um produto")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Produto encontrado"),
+            @ApiResponse(code = 404, message = "Produto não encontrado")
+    })
+    public ResponseEntity get(@PathVariable("id") @ApiParam("Id do Produto") Long id){
         Optional<Produto> produto = service.getProdutoById(id);
         if (!produto.isPresent()){
             return new ResponseEntity("Produto não encontrado", HttpStatus.NOT_FOUND);
@@ -43,6 +55,11 @@ public class ProdutoController {
     }
 
     @PostMapping()
+    @ApiOperation("Adicionar um produto")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Produto salvo"),
+            @ApiResponse(code = 400, message = "Erro ao salvar produto")
+    })
     public ResponseEntity post(ProdutoDTO dto) {
         try {
             Produto produto = converter(dto);
@@ -58,7 +75,12 @@ public class ProdutoController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity put(@PathVariable("id") Long id, ProdutoDTO dto) {
+    @ApiOperation("Alterar credenciais de um produto")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Produto alterado"),
+            @ApiResponse(code = 404, message = "Produto não encontrado")
+    })
+    public ResponseEntity put(@PathVariable("id") @ApiParam("Id do Produto") Long id, ProdutoDTO dto) {
         if (!service.getProdutoById(id).isPresent()) {
             return new ResponseEntity("Produto não encontrado", HttpStatus.NOT_FOUND);
         }
@@ -78,7 +100,12 @@ public class ProdutoController {
 
 
     @DeleteMapping("{id}")
-    public ResponseEntity delete(@PathVariable("id") Long id) {
+    @ApiOperation("Excluir produto")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Produto excluído"),
+            @ApiResponse(code = 404, message = "Produto não encontrado")
+    })
+    public ResponseEntity delete(@PathVariable("id") @ApiParam("Id do Produto") Long id) {
         Optional<Produto> produto = service.getProdutoById(id);
         if (!produto.isPresent()) {
             return new ResponseEntity("Produto não encontrado", HttpStatus.NOT_FOUND);

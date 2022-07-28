@@ -48,7 +48,7 @@ public class CategoriaController {
     }
 
     @PostMapping()
-    @ApiOperation("Obter detalhes de uma categoria")
+    @ApiOperation("Adicionar uma categoria")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Categoria salva"),
             @ApiResponse(code = 400, message = "Erro ao salvar categoria")
@@ -64,7 +64,7 @@ public class CategoriaController {
     }
 
     @PutMapping("{id}")
-    @ApiOperation("Obter detalhes de uma categoria")
+    @ApiOperation("Alterar credenciais de uma categoria")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Categoria alterada"),
             @ApiResponse(code = 404, message = "Categoria não encontrada")
@@ -84,7 +84,7 @@ public class CategoriaController {
     }
 
     @DeleteMapping("{id}")
-    @ApiOperation("Obter detalhes de uma categoria")
+    @ApiOperation("Deletar categoria")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Categoria excluída"),
             @ApiResponse(code = 404, message = "Categoria não encontrada")

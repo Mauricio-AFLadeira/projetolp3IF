@@ -8,6 +8,7 @@ import com.lp3.projeto.model.entity.Produto;
 import com.lp3.projeto.service.ItemPedidoService;
 import com.lp3.projeto.service.PedidoService;
 import com.lp3.projeto.service.ProdutoService;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/itensPedidos")
 @RequiredArgsConstructor
+@Api("API de Item Pedido")
 public class ItemPedidoController {
 
     private final ItemPedidoService service;
@@ -28,12 +30,22 @@ public class ItemPedidoController {
     private final PedidoService pedidoService;
 
     @GetMapping()
+    @ApiOperation("Obter todos os Itens Pedidos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Itens pedidos obtidos"),
+            @ApiResponse(code = 404, message = "Nenhum item pedido existente")
+    })
     public ResponseEntity get(){
         List<ItemPedido> itensPedidos = service.getItemPedido();
         return ResponseEntity.ok(itensPedidos.stream().map(ItemPedidoDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um item pedido")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Item pedido encontrado"),
+            @ApiResponse(code = 404, message = "Item pedido não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id){
         Optional<ItemPedido> itemPedido = service.getItemPedidoById(id);
         if(!itemPedido.isPresent()){
@@ -44,6 +56,11 @@ public class ItemPedidoController {
     }
 
     @PostMapping()
+    @ApiOperation("Adicionar um item pedido")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Item pedido salvo"),
+            @ApiResponse(code = 400, message = "Erro ao salvar o item pedido")
+    })
     public ResponseEntity post(ItemPedidoDTO dto) {
         try {
             ItemPedido itemPedido = converter(dto);
@@ -59,7 +76,12 @@ public class ItemPedidoController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity put(@PathVariable("id") Long id, ItemPedidoDTO dto) {
+    @ApiOperation("Alterar credenciais de um item pedido")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Item pedido alterado"),
+            @ApiResponse(code = 404, message = "Item pedido não encontrado")
+    })
+    public ResponseEntity put(@PathVariable("id") @ApiParam("Id do Item Pedido") Long id, ItemPedidoDTO dto) {
         if (!service.getItemPedidoById(id).isPresent()) {
             return new ResponseEntity("Item não encontrado", HttpStatus.NOT_FOUND);
         }
@@ -78,7 +100,12 @@ public class ItemPedidoController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity delete(@PathVariable("id") Long id) {
+    @ApiOperation("Excluir Item Pedido")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Item pedido excluído"),
+            @ApiResponse(code = 404, message = "Item pedido não encontrado")
+    })
+    public ResponseEntity delete(@PathVariable("id") @ApiParam("Id do Item Pedido") Long id) {
         Optional<ItemPedido> itemPedido = service.getItemPedidoById(id);
         if (!itemPedido.isPresent()) {
             return new ResponseEntity("Item não encontrado", HttpStatus.NOT_FOUND);
